@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// Get a new token for user
+// SignIn obtain a new token from user and password, return AuthResponse and error
 func (c *Client) SignIn() (*AuthResponse, error) {
 	if c.Auth.Username == "" || c.Auth.Password == "" {
 		return nil, fmt.Errorf("define username and password")
@@ -38,7 +38,7 @@ func (c *Client) SignIn() (*AuthResponse, error) {
 	return &ar, nil
 }
 
-// Revoke the token for a user
+// SignOut revoke the token for a user (future use)
 func (c *Client) SignOut() error {
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/auth/logout", c.HostURL), strings.NewReader(string("")))
 	if err != nil {
