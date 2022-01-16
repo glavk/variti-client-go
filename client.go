@@ -45,7 +45,7 @@ func NewClient(host, username, password *string) (*Client, error) {
 
 	ar, err := c.SignIn()
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("NewClient: signin failed: %w", err)
 	}
 
 	c.Token = ar.Token
@@ -63,13 +63,13 @@ func (c *Client) doRequest(req *http.Request) ([]byte, error) {
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("doRequest: request failed: %w", err)
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("doRequest: responce read failed: %w", err)
 	}
 
 	if res.StatusCode != http.StatusOK {
